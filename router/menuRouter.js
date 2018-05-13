@@ -1,4 +1,4 @@
-let { insertDataToDatabase } = require('./../utils')
+let { insertDataToDatabase, updateDataToDatabase } = require('./../utils')
 module.exports = {
   menu: (app, db) => {
     app.get('/get-menu', (req, res) => {
@@ -11,6 +11,10 @@ module.exports = {
     app.delete('/delete-menu', (req, res) => {
       let sql = `delete from class where selfId in (${req.query.allselfId.join(', ')})`
       db.select(sql, (data) => res.send(data))
+    })
+    app.put('/update-menu', (req, res) => {
+      let updateFieldArray = ['className', 'orderNumber', 'parentId', 'selfId', 'route', 'redirect']
+      db.select(updateDataToDatabase(updateFieldArray, req.query, 'class', 'id'), data => res.send(data))
     })
   }
 }
