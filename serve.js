@@ -6,6 +6,6 @@ let app = express()
 
 router(app)
 
-app.listen(8585, () => {
-  console.log('当前端口为：8585')
+app.listen(593, () => {
+  console.log('当前接口地址：http://localhost:593')
 })

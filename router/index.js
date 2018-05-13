@@ -1,7 +1,7 @@
 let path = require('path')
 let express = require('express')
 let db = require('./../db')
-let bodyparser = require('body-parser')
+let bodeParser = require('body-parser')
 let menuRouter = require('./menuRouter')
 let websiteRouter = require('./websiteRouter')
 
@@ -19,11 +19,12 @@ module.exports = (app) => {
     }
   })
 
-  app.use(bodyparser.json())
+  app.use(bodeParser.json())
 
-  app.use(bodyparser.urlencoded({ extended: false }))
+  app.use(bodeParser.urlencoded({ extended: false }))
 
   app.use(express.static(path.resolve(__dirname, '../')))
-  
+  // menuRouter.menu(app, db)
+  // websiteRouter.website(app, db)
   Object.values(Object.assign(menuRouter, websiteRouter)).forEach(item => item(app, db))
 }
