@@ -6,7 +6,7 @@ module.exports = {
     })
     app.post('/add-menu', (req, res) => {
       let insField = ['className', 'orderNumber', 'parentId', 'selfId', 'route', 'redirect']
-      db.select(insertDataToDatabase(insField, req.query, 'class'), (data) => res.send(data))
+      db.select(insertDataToDatabase(insField, req.body, 'class'), (data) => res.send(data))
     })
     app.delete('/delete-menu', (req, res) => {
       let sql = `delete from class where selfId in (${req.query.allselfId.join(', ')})`
@@ -14,7 +14,7 @@ module.exports = {
     })
     app.put('/update-menu', (req, res) => {
       let updateFieldArray = ['className', 'orderNumber', 'parentId', 'selfId', 'route', 'redirect']
-      db.select(updateDataToDatabase(updateFieldArray, req.query, 'class', 'id'), data => res.send(data))
+      db.select(updateDataToDatabase(updateFieldArray, req.body, 'class', 'id'), data => res.send(data))
     })
   }
 }

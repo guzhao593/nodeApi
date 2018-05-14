@@ -24,7 +24,6 @@ module.exports = (app) => {
   app.use(bodeParser.urlencoded({ extended: false }))
 
   app.use(express.static(path.resolve(__dirname, '../')))
-  // menuRouter.menu(app, db)
-  // websiteRouter.website(app, db)
+
   Object.values(Object.assign(menuRouter, websiteRouter)).forEach(item => item(app, db))
 }
