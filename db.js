@@ -6,7 +6,7 @@ let pool = mysql.createPool({
   password: '',
   port: 3306,
   database: 'mycommonweb',
-  multipleStatements: true  // 启用执行多条语句
+  multipleStatements: true  // 启用执行多条语句 
 })
 
 module.exports = {

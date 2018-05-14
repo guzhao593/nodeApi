@@ -3,9 +3,6 @@ module.exports = {
   website: (app, db) => {
     app.get('/get-website', (req, res) => {
       db.select(`select * from web where class = '${req.query.class}'`, (data) => {
-        // data.forEach((item, key) => {
-        //   db.select(`update web set orderNo='${key}' where id = '${item.id}'`, (data) => console.log(data.affectedRows))
-        // })
         res.send(data)
       })
     })
