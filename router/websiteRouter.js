@@ -7,14 +7,20 @@ module.exports = {
       })
     })
     app.post('/update-website-orderNO', (req, res) => {
-      let sql = req.body.webData.map(({id}, key )=> `update web set orderNo = '${key}' where id = '${id}'; `).join('')
-      db.select(sql, data => res.send(data))
+      let sql = [], key = 0
+      req.body.webData.forEach((item)=> {
+        if(item !== null) {
+          sql.push(`update web set orderNo = '${key}' where id = '${item.id}'; `)
+          key++
+        }
+      })
+      db.select(sql.join(''), data => res.send(data))
     })
     app.delete('/delete-website', (req, res) => {
       db.select(`delete from web where id = '${req.query.id}'`, (data) => res.send(data))
     })
     app.post('/add-website', (req, res) => {
-      let insFieldArray = ['url', 'name', 'class']
+      let insFieldArray = ['url', 'name', 'class', 'orderNo']
       db.select(insertDataToDatabase(insFieldArray, req.body, 'web'), (data) => res.send(data))
     })
     app.put('/update-website', (req, res) => {
