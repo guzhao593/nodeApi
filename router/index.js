@@ -24,6 +24,8 @@ module.exports = (app) => {
   app.use(bodeParser.urlencoded({ extended: false }))
 
   app.use(express.static(path.resolve(__dirname, '../')))
+  // 添加静态资源访问接口
+  app.use(express.static(path.resolve(__dirname, '../public')))
 
   Object.values(Object.assign(menuRouter, websiteRouter)).forEach(item => item(app, db))
 }

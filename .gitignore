@@ -2,3 +2,5 @@
 node_modules/
 #过滤zip文件
 *.zip
+#过滤public/html文件夹
+public/html
