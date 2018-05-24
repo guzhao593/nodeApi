@@ -5,11 +5,11 @@ module.exports = {
       db.select(`select * from class`, (data) => res.send(data))
     })
     app.post('/add-menu', (req, res) => {
-      let insField = ['className', 'orderNumber', 'parentId', 'selfId', 'route', 'redirect']
+      let insField = ['className', 'orderNumber', 'parentId', 'selfId', 'route', 'redirect', 'icon']
       db.select(insertDataToDatabase(insField, req.body, 'class'), (data) => res.send(data))
     })
     app.delete('/delete-menu', (req, res) => {
-      let sql = `delete from class where selfId in (${req.query.allselfId.join(', ')})`
+      let sql = `delete from class where selfId in (${req.query.selfId})`
       db.select(sql, (data) => res.send(data))
     })
     app.put('/update-menu', (req, res) => {

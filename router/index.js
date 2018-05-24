@@ -26,6 +26,8 @@ module.exports = (app) => {
   app.use(express.static(path.resolve(__dirname, '../')))
   // 添加静态资源访问接口
   app.use(express.static(path.resolve(__dirname, '../public')))
-
+  app.get('/download', (req, res) => {
+    res.download('./public/html/html/01.html', '01.html')
+  })
   Object.values(Object.assign(menuRouter, websiteRouter)).forEach(item => item(app, db))
 }
