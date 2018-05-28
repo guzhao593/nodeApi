@@ -2,7 +2,13 @@ let  { insertDataToDatabase, updateDataToDatabase } = require('./../utils')
 module.exports = {
   website: (app, db) => {
     app.get('/get-website', (req, res) => {
-      db.select(`select * from web where class = '${req.query.class}'`, (data) => {
+      let sql
+      if (!req.query.class) {
+        sql = 'select * from web'
+      } else {
+        sql = `select * from web where class = '${req.query.class}'`
+      }
+      db.select(sql, (data) => {
         res.send(data)
       })
     })
