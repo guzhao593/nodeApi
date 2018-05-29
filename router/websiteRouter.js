@@ -2,14 +2,19 @@ let  { insertDataToDatabase, updateDataToDatabase } = require('./../utils')
 module.exports = {
   website: (app, db) => {
     app.get('/get-website', (req, res) => {
-      let sql
-      if (!req.query.class) {
-        sql = 'select * from web'
-      } else {
-        sql = `select * from web where class = '${req.query.class}'`
-      }
+      let sql = 'select * from web '
+      req.query.class && (sql += `where class = '${req.query.class}'`)
+      req.query.pageSize && (sql += `limit ${(req.query.pageIndex - 1) * req.query.pageSize}, ${req.query.pageSize}; select count(*) as sum from web`)
       db.select(sql, (data) => {
-        res.send(data)
+        let resObj = {
+          data: data[0],
+          info: {
+            total: data[1][0].sum,
+            pageIndex: req.query.pageIndex,
+            pageSize: req.query.pageSize
+          }
+        }
+        res.send(req.query.pageSize ? resObj : data[0])
       })
     })
     app.post('/update-website-orderNO', (req, res) => {
