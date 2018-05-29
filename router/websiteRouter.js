@@ -6,15 +6,16 @@ module.exports = {
       req.query.class && (sql += `where class = '${req.query.class}'`)
       req.query.pageSize && (sql += `limit ${(req.query.pageIndex - 1) * req.query.pageSize}, ${req.query.pageSize}; select count(*) as sum from web`)
       db.select(sql, (data) => {
-        let resObj = {
+        let resObj = null
+        req.query.pageSize && (resObj = {
           data: data[0],
           info: {
             total: data[1][0].sum,
             pageIndex: req.query.pageIndex,
             pageSize: req.query.pageSize
           }
-        }
-        res.send(req.query.pageSize ? resObj : data[0])
+        })
+        res.send(resObj || data)
       })
     })
     app.post('/update-website-orderNO', (req, res) => {
