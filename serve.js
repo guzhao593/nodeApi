@@ -1,7 +1,7 @@
 let express = require('express')
 
 let router = require('./router')
-
+require('./crawler/http.js')
 let app = express()
 app.get('/', function (req, res) {
   res.render('index', { title: 'Hey', message: 'Hello there!'});
