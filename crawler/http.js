@@ -37,7 +37,8 @@ function crawler (cb) {
                     return {
                         order: key + 1,
                         title: item.keyword,
-                        href: item.links[4][0]
+                        href: item.links[4][0],
+                        searches: item.searches
                       }
                     })
                     resolve(hotList)
