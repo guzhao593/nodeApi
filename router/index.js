@@ -4,7 +4,7 @@ let db = require('./../db')
 let bodeParser = require('body-parser')
 let menuRouter = require('./menuRouter')
 let websiteRouter = require('./websiteRouter')
-
+let crawlerRouter = require('./crawlerRouter')
 module.exports = (app) => {
   // 设置响应头
   app.all('*', function(req, res, next) {
@@ -29,5 +29,5 @@ module.exports = (app) => {
   app.get('/download', (req, res) => {
     res.download('./public/html/html/01.html', '01.html')
   })
-  Object.values(Object.assign(menuRouter, websiteRouter)).forEach(item => item(app, db))
+  Object.values(Object.assign(menuRouter, websiteRouter, crawlerRouter)).forEach(item => item(app, db))
 }
