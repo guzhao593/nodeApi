@@ -2,9 +2,9 @@ let  { insertDataToDatabase, updateDataToDatabase } = require('./../utils')
 module.exports = {
   website: (app, db) => {
     app.get('/get-website', (req, res) => {
-      let sql = 'select * from web order by id desc '
+      let sql = 'select * from web '
       req.query.class && (sql += `where class = '${req.query.class}'`)
-      req.query.pageSize && (sql += `limit ${(req.query.pageIndex - 1) * req.query.pageSize}, ${req.query.pageSize}; select count(*) as sum from web`)
+      req.query.pageSize && (sql += `order by id desc limit ${(req.query.pageIndex - 1) * req.query.pageSize}, ${req.query.pageSize}; select count(*) as sum from web`)
       if(+req.query.pageSize === -1) {sql = 'select * from web; select count(*) as sum from web'}
       db.select(sql, (data) => {
         let resObj = null
