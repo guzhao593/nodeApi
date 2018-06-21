@@ -2,7 +2,7 @@ let  { insertDataToDatabase, updateDataToDatabase } = require('./../utils')
 module.exports = {
   website: (app, db) => {
     app.get('/get-website', (req, res) => {
-      let sql = 'select * from web '
+      let sql = 'select * from web order by id desc '
       req.query.class && (sql += `where class = '${req.query.class}'`)
       req.query.pageSize && (sql += `limit ${(req.query.pageIndex - 1) * req.query.pageSize}, ${req.query.pageSize}; select count(*) as sum from web`)
       if(+req.query.pageSize === -1) {sql = 'select * from web; select count(*) as sum from web'}
@@ -30,7 +30,8 @@ module.exports = {
       db.select(sql.join(''), data => res.send(data))
     })
     app.delete('/delete-website', (req, res) => {
-      db.select(`delete from web where id = '${req.query.id}'`, (data) => res.send(data))
+      const id = Array.isArray(JSON.parse(req.query.id)) ? JSON.parse(req.query.id) : req.query.id
+      db.select(`delete from web where id in (${id})`, (data) => res.send(data))
     })
     app.post('/add-website', (req, res) => {
       let insFieldArray = ['url', 'name', 'class', 'orderNo']

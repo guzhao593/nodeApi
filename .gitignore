@@ -4,3 +4,5 @@ node_modules/
 *.zip
 #过滤public/html文件夹
 public/html
+#过滤vscode
+.vscode/
