@@ -5,7 +5,7 @@ module.exports = {
       let sql = 'select * from web '
       req.query.class && (sql += `where class = '${req.query.class}'`)
       req.query.pageSize && (sql += `order by id desc limit ${(req.query.pageIndex - 1) * req.query.pageSize}, ${req.query.pageSize}; select count(*) as sum from web`)
-      if(+req.query.pageSize === -1) {sql = 'select * from web; select count(*) as sum from web'}
+      if(+req.query.pageSize === -1) {sql = 'select * from web order by id desc; select count(*) as sum from web'}
       db.select(sql, (data) => {
         let resObj = null
         req.query.pageSize && (resObj = {
